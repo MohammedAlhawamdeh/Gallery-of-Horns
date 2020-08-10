@@ -1,1 +1,1 @@
-# jQuery-Project
+# Gallery-of-Horns
