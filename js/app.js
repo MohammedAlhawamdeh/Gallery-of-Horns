@@ -1,68 +1,76 @@
-"use strict";
-
-let arrayOfObjects = [];
-
-function Images(description, horns, image_url, keyword, title) {
-  this.description = description;
-  this.horns = horns;
-  this.image_url = image_url;
-  this.keyword = keyword;
-  this.title = title;
-  arrayOfObjects.push(this);
-}
-
-function render() {
-  arrayOfObjects.forEach((val) => {
-    let div = document.getElementById("div1");
-    let imgEl = document.createElement("img");
-    div.appendChild(imgEl);
-    imgEl.src = val.image_url;
-  });
-}
-
-removeEventListener;
-
+'use strict'
+let images = []
+let imageRendering = document.getElementById('render')
+let imageFiltering = document.getElementById('filter')
+let imageSorting = document.getElementById('sort')
 fetch("../data/page-1.json")
   .then((results) => results.json())
   .then((data) => {
-    data.forEach((val) => {
-      new Images(
-        val.description,
-        val.horns,
-        val.image_url,
-        val.keyword,
-        val.title
-      );
-    });
-    render();
-    filter();
+    data.forEach((value) => {
+      images.push(value)
+    })
+    render()
+  })
+function render() {
+  images.forEach((value) => {
+    let imgEl = document.createElement("img");
+    imageRendering.appendChild(imgEl);
+    imgEl.setAttribute('src', value.image_url)
   });
+}
+imageFiltering.addEventListener('change', (e) => {
+  imageRendering.innerHTML = ''
+  images.forEach((val) => {
+    if (e.target.value === val.keyword) {
+      let imgEl = document.createElement("img");
+      imageRendering.appendChild(imgEl);
+      imgEl.setAttribute('src', val.image_url)
+    } else if (e.target.value === 'Filter-By-Keyword') {
+      imageRendering.innerHTML = ''
+      render()
+    }
+  });
+})
+imageSorting.addEventListener('change', (e) => {
+  if (e.target.value === 'Title') {
+    let titleCopy = images.slice()
+    let sortedTitle = titleCopy.sort(sortedByTitle)
+    imageRendering.innerHTML = ''
+    sortedTitle.forEach((val) => {
+      let imageEl = document.createElement('img')
+      imageRendering.appendChild(imageEl)
+      imageEl.setAttribute('src', val.image_url)
+    })
+  } else if (e.target.value === 'Horn') {
+    let hornCopy = images.slice()
+    let sortedHorn = hornCopy.sort(sortedByHorn)
+    imageRendering.innerHTML = ''
+    sortedHorn.forEach((val) => {
+      let imageEl = document.createElement('img')
+      imageRendering.appendChild(imageEl)
+      imageEl.setAttribute('src', val.image_url)
+    })
+  } else if (e.target.value === 'Sort-By-Title / Horn') {
+    imageRendering.innerHTML = ''
+    render()
+  }
 
-function filter() {
-  let keywordArray = [];
-  let selection = document.getElementById("selection");
-  arrayOfObjects.forEach((val, idx) => {
-    keywordArray.push(val.keyword);
-  });
-  let unique = [...new Set(keywordArray)];
-  console.log(unique);
-  unique.forEach((val2) => {
-    let optionEl = document.createElement("option");
-    selection.appendChild(optionEl);
-    optionEl.textContent = `${val2}`;
-    optionEl.setAttribute("value", `${val2}`);
-  });
-  console.log(keywordArray);
-  selection.addEventListener("change", () => {
-    document.getElementById("div1").style.display = "none";
-    let div = document.getElementById("div2");
-    div.innerHTML = "";
-    arrayOfObjects.forEach((val) => {
-      if (selection.options[selection.selectedIndex].text === val.keyword) {
-        let imgEl = document.createElement("img");
-        div.appendChild(imgEl);
-        imgEl.src = val.image_url;
-      }
-    });
-  });
+})
+function sortedByTitle(a, b) {
+  if (a.title < b.title) {
+    return -1;
+  }
+  if (a.title > b.title) {
+    return 1;
+  }
+  return 0;
+}
+function sortedByHorn(a, b) {
+  if (a.horns > b.horns) {
+    return -1;
+  }
+  if (a.horns < b.horns) {
+    return 1;
+  }
+  return 0;
 }

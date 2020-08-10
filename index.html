@@ -1,24 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/layouts.css" />
-    <link rel="stylesheet" href="css/modules.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="./js/app.js"></script>
-    <title>jQuery-Project</title>
-  </head>
 
-  <body>
-    <div class="custom-select" style="width: 200px;">
-      <select id="selection">
-        <option disabled hidden selected>Select</option>
-      </select>
-    </div>
-    <div id="div1"></div>
-    <div id="div2"></div>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/modules.css">
+  <title>Gallery Of Horns</title>
+</head>
+
+<body>
+  <div id="container">
+    <select id="filter">
+      <option>Filter-By-Keyword</option>
+      <option>narwhal</option>
+      <option>rhino</option>
+      <option>unicorn</option>
+      <option>unilego</option>
+      <option>triceratops</option>
+      <option>markhor</option>
+      <option>mouflon</option>
+      <option>addax</option>
+      <option>chameleon</option>
+      <option>lizard</option>
+      <option>dragon</option>
+    </select>
+    <select id="sort">
+      <option> Sort-By-Title / Horn
+      </option>
+      <option>Title</option>
+      <option>Horn</option>
+    </select>
+    <div id="render"></div>
+  </div>
+</body>
+<script src="./js/app.js"></script>
+
 </html>
