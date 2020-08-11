@@ -149,9 +149,6 @@ imageFilteringSecond.addEventListener('change', (e) => {
     }
   });
 })
-
-
-
 function sortedByTitle(a, b) {
   if (a.title < b.title) {
     return -1;
